@@ -34,4 +34,9 @@ export const updateProduct = async (productId, payload, options = {}) => {
   };
 };
 
-export const deleteProduct = async () => {};
+export const deleteProduct = async (productId) => {
+  const product = ProductsCollection.findOneAndDelete({
+    _id: productId,
+  });
+  return product;
+};
