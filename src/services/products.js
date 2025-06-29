@@ -15,6 +15,23 @@ export const createProduct = async (payload) => {
   return payload;
 };
 
-export const updateProduct = async (payload) => {};
+export const updateProduct = async (productId, payload, options = {}) => {
+  const rawResult = await ProductsCollection.findOneAndUpdate(
+    { _id: productId },
+    payload,
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+    },
+  );
+
+  if (!rawResult || !rawResult.value) return null;
+
+  return {
+    product: rawResult.value,
+    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+  };
+};
 
 export const deleteProduct = async () => {};
