@@ -6,8 +6,11 @@ import {
   getProductsController,
   updateProductController,
 } from '../controllers/products.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const router = Router();
+
+router.use('/products/:productId', isValidId);
 
 router.get('/products', getProductsController);
 router.get('/products/:productId', getProductByIdController);
